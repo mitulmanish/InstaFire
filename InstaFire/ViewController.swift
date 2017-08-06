@@ -13,7 +13,7 @@ enum FirebaseError: Error {
 	case userCreationError(reason: String)
 }
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	var addPhotoButton: UIButton = {
 		let button: UIButton = UIButton(type: .system)
@@ -73,7 +73,28 @@ class ViewController: UIViewController, UITextFieldDelegate {
 		view.addSubview(addPhotoButton)
 		addPhotoButton.customConstraints(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
 		addPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		addPhotoButton.addTarget(self, action: #selector(uploadPhoto), for: .touchUpInside)
 		setupViews()
+	}
+	
+	func uploadPhoto() {
+		let imagePickerController = UIImagePickerController()
+		imagePickerController.delegate = self
+		imagePickerController.allowsEditing = true
+		present(imagePickerController, animated: true, completion: nil)
+	}
+	
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+		if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+			addPhotoButton.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+		} else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+			addPhotoButton.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
+		}
+		addPhotoButton.layer.cornerRadius = addPhotoButton.frame.width / 2
+		addPhotoButton.layer.masksToBounds = true
+		addPhotoButton.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
+		addPhotoButton.layer.borderWidth = 2
+		dismiss(animated: true, completion: nil)
 	}
 	
 	private func setupViews() {
@@ -121,15 +142,46 @@ class ViewController: UIViewController, UITextFieldDelegate {
 				print(error.debugDescription)
 				return
 			}
-			guard let user = user else { return }
-			print(user.email ?? "")
-			print(user.displayName ?? "")
+			
+			guard let avatarImage = self.addPhotoButton.imageView?.image, let imageData = UIImageJPEGRepresentation(avatarImage, 0.3)
+				else { return }
+			let filename = UUID().uuidString.lowercased()
+			FIRStorage.storage().reference().child("profile_images").child(filename).put(imageData, metadata: nil, completion: { (metadata, error) in
+				
+				if let uploadError = error {
+					print(uploadError.localizedDescription)
+					return
+				}
+				
+				guard let profileImageDownloadURL = metadata?.downloadURL()?.absoluteString else { return }
+				
+				guard let userID = user?.uid else { return }
+				let usernameValues = ["username": userName, "profileImageURL": profileImageDownloadURL]
+				let userValues = [userID: usernameValues]
+
+				FIRDatabase.database().reference().child("users").updateChildValues(userValues, withCompletionBlock: { (error, ref) in
+					guard let error = error else {
+						print("sucessfully saved data in Firebase DB")
+						return
+					}
+					print(error.localizedDescription)
+				})
+			})
 		})
 	}
 }
 
 extension UIView {
-	func customConstraints(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
+	func customConstraints(top: NSLayoutYAxisAnchor?,
+	                       left: NSLayoutXAxisAnchor?,
+	                       bottom: NSLayoutYAxisAnchor?,
+	                       right: NSLayoutXAxisAnchor?,
+	                       paddingTop: CGFloat,
+	                       paddingLeft: CGFloat,
+	                       paddingBottom: CGFloat,
+	                       paddingRight: CGFloat,
+	                       width: CGFloat,
+	                       height: CGFloat) {
 		translatesAutoresizingMaskIntoConstraints = false
 		if let top = top {
 			topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
