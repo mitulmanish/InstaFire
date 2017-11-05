@@ -146,6 +146,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
 			guard let avatarImage = self.addPhotoButton.imageView?.image, let imageData = UIImageJPEGRepresentation(avatarImage, 0.3)
 				else { return }
 			let filename = UUID().uuidString.lowercased()
+			
+			// replace these string endpoints with enums like user opeartion upload image to storage or update user data
 			FIRStorage.storage().reference().child("profile_images").child(filename).put(imageData, metadata: nil, completion: { (metadata, error) in
 				
 				if let uploadError = error {

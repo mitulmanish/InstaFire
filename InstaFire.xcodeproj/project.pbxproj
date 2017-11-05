@@ -15,6 +15,9 @@
 		E92B39E31EB61F3A0064C7E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E92B39E11EB61F3A0064C7E8 /* LaunchScreen.storyboard */; };
 		E980EDA31EC8526E00D8E4E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E980EDA21EC8526E00D8E4E2 /* GoogleService-Info.plist */; };
 		E9A6CC091EC85BBE007279C7 /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A6CC081EC85BBE007279C7 /* HelperExtensions.swift */; };
+		E9BC9B451F93218D00326248 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BC9B441F93218D00326248 /* MainTabBarController.swift */; };
+		E9BC9B471F9323E600326248 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BC9B461F9323E600326248 /* UserProfileController.swift */; };
+		E9BC9B491F936A0E00326248 /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BC9B481F936A0E00326248 /* UserProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		E92B39E41EB61F3A0064C7E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E980EDA21EC8526E00D8E4E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E9A6CC081EC85BBE007279C7 /* HelperExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
+		E9BC9B441F93218D00326248 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		E9BC9B461F9323E600326248 /* UserProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
+		E9BC9B481F936A0E00326248 /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,12 +90,15 @@
 			children = (
 				E9A6CC071EC85B9D007279C7 /* Utils */,
 				E92B39D81EB61F3A0064C7E8 /* AppDelegate.swift */,
+				E9BC9B441F93218D00326248 /* MainTabBarController.swift */,
+				E9BC9B461F9323E600326248 /* UserProfileController.swift */,
 				E92B39DA1EB61F3A0064C7E8 /* ViewController.swift */,
 				E92B39DC1EB61F3A0064C7E8 /* Main.storyboard */,
 				E92B39DF1EB61F3A0064C7E8 /* Assets.xcassets */,
 				E92B39E11EB61F3A0064C7E8 /* LaunchScreen.storyboard */,
 				E980EDA21EC8526E00D8E4E2 /* GoogleService-Info.plist */,
 				E92B39E41EB61F3A0064C7E8 /* Info.plist */,
+				E9BC9B481F936A0E00326248 /* UserProfileHeaderView.swift */,
 			);
 			path = InstaFire;
 			sourceTree = "<group>";
@@ -230,6 +239,9 @@
 			files = (
 				E92B39DB1EB61F3A0064C7E8 /* ViewController.swift in Sources */,
 				E9A6CC091EC85BBE007279C7 /* HelperExtensions.swift in Sources */,
+				E9BC9B491F936A0E00326248 /* UserProfileHeaderView.swift in Sources */,
+				E9BC9B451F93218D00326248 /* MainTabBarController.swift in Sources */,
+				E9BC9B471F9323E600326248 /* UserProfileController.swift in Sources */,
 				E92B39D91EB61F3A0064C7E8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,7 +309,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -342,7 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -356,11 +368,14 @@
 			baseConfigurationReference = 2E807870AF12B0E8900663AA /* Pods-InstaFire.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5536D5R8P9;
 				INFOPLIST_FILE = InstaFire/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mitulmanish.InstaFire;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 3.0;
 			};
@@ -371,11 +386,14 @@
 			baseConfigurationReference = 471F83D8F2209E4456B236C3 /* Pods-InstaFire.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5536D5R8P9;
 				INFOPLIST_FILE = InstaFire/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mitulmanish.InstaFire;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 3.0;
 			};
